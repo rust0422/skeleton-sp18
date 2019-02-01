@@ -6,6 +6,8 @@ public class Planet{
 	public double mass;
 	public String imgFileName;
 
+	static final double G = 6.67e-11;
+
 	public Planet(double xP, double yP, double xV,
 				  double yV, double m, String img){
 		xxPos = xP;
@@ -24,4 +26,69 @@ public class Planet{
 		mass  = P.mass;
 		imgFileName = P.imgFileName;
 	}
+
+	/** Calculate distance between two planet*/
+	public double calcDistance(Planet p){
+		double xxDis = this.xxPos-p.xxPos;
+		double yyDis = this.yyPos-p.yyPos;
+		return Math.sqrt(xxDis*xxDis+yyDis*yyDis);
+	}
+
+	/** Calculate Force exerted by some planet*/
+	public double calcForceExertedBy(Planet p){
+		double r = this.calcDistance(p);
+		double force = G * p.mass * this.mass / (r * r);
+		return force;
+	}
+
+	/** Calculate Force exerted by all other planets in X directions*/
+	public double calcNetForceExertedByX(Planet[] allPlanets){
+		double netForceX = 0;
+		for(int i = 0;i<allPlanets.length;i++){
+			Planet p = allPlanets[i];
+			if(this.equals(p)){
+				continue;
+			}
+			double f = this.calcForceExertedBy(p);
+			double r = this.calcDistance(p);
+			netForceX += f * (p.xxPos - this.xxPos);
+		}
+		return netForceX;
+	}
+
+	/** Calculate Force exerted by all other planets in Y directions*/
+	public double calcNetForceExertedByY(Planet[] allPlanets){
+		double netForceY = 0;
+		for(int i = 0;i<allPlanets.length;i++){
+			Planet p = allPlanets[i];
+			if(this.equals(p)){
+				continue;
+			}
+			double f = this.calcForceExertedBy(p);
+			double r = this.calcDistance(p);
+			netForceY += f * (p.yyPos - this.yyPos);
+		}
+		return netForceY;
+	}
+
+	public void update(double dt, double fX, double fY){
+		double axx = fX/this.mass;
+		double ayy = fY/this.mass;
+
+		this.xxVel += dt * axx;
+		this.yyVel += dt * ayy;
+
+		this.xxPos +=  xxVel * dt;
+		this.yyPos +=  yyVel * dt;
+	}
+
+
+
+
+
+
+
+
+
+
 }
