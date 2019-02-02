@@ -41,6 +41,33 @@ public class Planet{
 		return force;
 	}
 
+	/** Describe the force exerted in the X directions.
+        Args(Planet):
+            Planet Object p.
+        Returns(double):
+            Force exerted in the X direction
+    */
+    public double calcForceExertedByX(Planet p) {
+        double F = this.calcForceExertedBy(p);
+        double r = this.calcDistance(p);
+        double dx = p.xxPos - this.xxPos;
+        return (F * dx) / r;
+    }
+
+
+    /** Describe the force exerted in the Y directions.
+        Args(Planet):
+            Planet Object p.
+        Returns(double):
+            Force exerted in the Y direction.
+    */
+    public double calcForceExertedByY(Planet p) {
+        double F = this.calcForceExertedBy(p);
+        double r = this.calcDistance(p);
+        double dy = p.yyPos - this.yyPos;
+        return (F * dy) / r;
+    }
+
 	/** Calculate Force exerted by all other planets in X directions*/
 	public double calcNetForceExertedByX(Planet[] allPlanets){
 		double netForceX = 0;
@@ -49,9 +76,8 @@ public class Planet{
 			if(this.equals(p)){
 				continue;
 			}
-			double f = this.calcForceExertedBy(p);
-			double r = this.calcDistance(p);
-			netForceX += f * (p.xxPos - this.xxPos);
+			double f = this.calcForceExertedByX(p);
+			netForceX += f;
 		}
 		return netForceX;
 	}
@@ -64,9 +90,8 @@ public class Planet{
 			if(this.equals(p)){
 				continue;
 			}
-			double f = this.calcForceExertedBy(p);
-			double r = this.calcDistance(p);
-			netForceY += f * (p.yyPos - this.yyPos);
+			double f = this.calcForceExertedByY(p);
+			netForceY += f;
 		}
 		return netForceY;
 	}
@@ -82,7 +107,9 @@ public class Planet{
 		this.yyPos +=  yyVel * dt;
 	}
 
-
+	public void draw(){
+		StdDraw.picture(this.xxPos, this.yyPos, "images/"+imgFileName);
+	}
 
 
 
