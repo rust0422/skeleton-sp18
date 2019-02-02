@@ -60,8 +60,7 @@ public class NBody{
 		    //Draw the background
 		    StdDraw.picture(0, 0, imageToStart);
 
-		    for(int i=0;i<planets.length;i++){
-		    	Planet p = planets[i];
+		    for(Planet p : planets){
 		    	p.draw();
 		    }
 
