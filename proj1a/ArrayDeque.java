@@ -1,8 +1,8 @@
 public class ArrayDeque<T> {
-    public T[] items;
-    public int size;
-    public int nextFirst;
-    public int nextLast;
+    private T[] items;
+    private int size;
+    private int nextFirst;
+    private int nextLast;
 
     /* Assume that starting point is on index 0
 
@@ -105,7 +105,7 @@ public class ArrayDeque<T> {
     /**
      * Prints the items in the deque from the first to last, separated by space
      */
-    public void pirntDeque() {
+    public void printDeque() {
         int p = plusOne(nextFirst);
         for (int i = 0; i < size; i++) {
             System.out.print(items[p] + " ");
