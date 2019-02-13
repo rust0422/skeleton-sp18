@@ -77,6 +77,18 @@ public class ArrayDeque<T> {
     }
 
     /**
+     * Get
+     */
+    public T get(int i) {
+        if (i > size) {
+            return null;
+        }
+        i = nextFirst + 1 + i;
+        i = i % (items.length - 1);
+        return items[i];
+    }
+
+    /**
      * Returns the number of items in the deque
      */
     public int size() {
@@ -139,4 +151,14 @@ public class ArrayDeque<T> {
     private float usageRatio() {
         return ((float) size / items.length);
     }
+
+/*    public static void main(String[] args) {
+        ArrayDeque<Integer> D = new ArrayDeque<>();
+        for (int i = 0; i < 10; i++) {
+            D.addLast(i);
+            D.pirntDeque();
+            System.out.println();
+        }
+        System.out.println(D.get(6));
+    }*/
 }
