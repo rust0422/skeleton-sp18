@@ -139,29 +139,4 @@ public class ArrayDeque<T> {
     private float usageRatio() {
         return ((float) size / items.length);
     }
-
-    public static void main(String[] args) {
-        ArrayDeque<Integer> A = new ArrayDeque<>();
-        for (int i = 0; i < 5; i++) {
-            A.addLast(i);
-            A.pirntDeque();
-            System.out.println();
-        }
-        for (int i = 0; i < 5; i++) {
-            A.addFirst(i);
-            A.pirntDeque();
-            System.out.println();
-        }
-        for (int i = 0; i < 5; i++) {
-            A.removeFirst();
-            A.pirntDeque();
-            System.out.println();
-        }
-        for (int i = 0; i < 5; i++) {
-            A.removeLast();
-            A.pirntDeque();
-            System.out.println();
-        }
-    }
-
 }
