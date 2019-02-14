@@ -83,8 +83,9 @@ public class ArrayDeque<T> {
         if (i > size) {
             return null;
         }
-        i = nextFirst + i;
-        i = i % (items.length - 1);
+        i = nextFirst + i + 1;
+        // When it hits index length, go back to 0
+        i = i % items.length;
         return items[i];
     }
 
@@ -154,11 +155,12 @@ public class ArrayDeque<T> {
 
 /*    public static void main(String[] args) {
         ArrayDeque<Integer> D = new ArrayDeque<>();
-        for (int i = 0; i < 10; i++) {
-            D.addLast(i);
-            D.pirntDeque();
-            System.out.println();
-        }
-        System.out.println(D.get(6));
+        D.addLast(0);
+        D.addLast(1);
+        D.addFirst(2);
+        D.addFirst(3);
+        D.addLast(4);
+        int d = D.get(0);
+        System.out.println(d);
     }*/
 }
