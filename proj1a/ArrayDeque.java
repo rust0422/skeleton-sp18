@@ -54,7 +54,7 @@ public class ArrayDeque<T> {
         items[nextFirst] = null;
         size -= 1;
         if (usageRatio() < 0.25) {
-            resize(items.length / 2);
+            resize(items.length / 2 + 1);// it avoid some problems.
         }
         return t;
     }
@@ -71,7 +71,7 @@ public class ArrayDeque<T> {
         items[nextLast] = null;
         size -= 1;
         if (usageRatio() < 0.25) {
-            resize(items.length / 2);
+            resize(items.length / 2 + 1);
         }
         return t;
     }
@@ -126,10 +126,17 @@ public class ArrayDeque<T> {
             a[i] = items[p];
             p = plusOne(p);
         }
+
+        items = a;
         // Set back these two variables.
         nextFirst = 0;
+/*        // When reduce the length of items, nextLast may be out bounded
+        if (nextLast >= items.length) {
+            nextLast %= items.length;
+        } else {
+            nextLast = size + 1;
+        }*/
         nextLast = size + 1;
-        items = a;
     }
 
     /**
@@ -156,11 +163,27 @@ public class ArrayDeque<T> {
 /*    public static void main(String[] args) {
         ArrayDeque<Integer> D = new ArrayDeque<>();
         D.addLast(0);
-        D.addLast(1);
-        D.addFirst(2);
-        D.addFirst(3);
-        D.addLast(4);
-        int d = D.get(0);
-        System.out.println(d);
+        D.printDeque();
+        System.out.println();
+
+        D.addLast(2);
+        D.printDeque();
+        System.out.println();
+
+        D.addLast(3);
+        D.printDeque();
+        System.out.println();
+
+        D.removeLast();
+        D.printDeque();
+        System.out.println();
+
+        D.removeFirst();
+        D.printDeque();
+        System.out.println();
+
+        D.addLast(6);
+        D.printDeque();
+        System.out.println();
     }*/
 }
