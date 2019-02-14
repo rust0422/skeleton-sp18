@@ -83,7 +83,7 @@ public class ArrayDeque<T> {
         if (i > size) {
             return null;
         }
-        i = nextFirst + 1 + i;
+        i = nextFirst + i;
         i = i % (items.length - 1);
         return items[i];
     }
