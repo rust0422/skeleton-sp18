@@ -55,9 +55,10 @@ public class Percolation {
         if (row == 0) {
             o.union(to2D(row, col), top);
         }
-        if (row == N - 1) {
+        /*if (row == N - 1) {
             o.union(to2D(row, col), bottom);
         }
+        */
 
         // connect to surrouding sites.
         for (int c = col - 1; c <= col + 1; c += 1) {
@@ -111,7 +112,13 @@ public class Percolation {
         }
         return false;
         */
-        return o.connected(top, bottom);
+        for (int c = 0; c < N; c += 1) {
+            if (isFull(N - 1, c)) {
+                return true;
+            }
+        }
+        return false;
+        //return o.connected(top, bottom);
     }
 
     private boolean isOut(int row, int col) {
