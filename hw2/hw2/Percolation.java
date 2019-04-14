@@ -4,6 +4,8 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private WeightedQuickUnionUF o;
+    private WeightedQuickUnionUF o2;
+
     private boolean[][] open;
     private int top;
     private int bottom;
@@ -14,11 +16,13 @@ public class Percolation {
         if (N <= 0) {
             throw new java.lang.IllegalArgumentException("N must bee positive.");
         }
-        // 2 more for top and bottom
-        o = new WeightedQuickUnionUF(N * N + 2);
         this.N = N;
         this.top = N * N;
         this.bottom = N * N + 1;
+
+        // 2 more for top and bottom
+        o = new WeightedQuickUnionUF(N * N + 2);
+        o2 = new WeightedQuickUnionUF(N * N + 1); //no bottom for 02
 
         open = new boolean[N][N];
         //initialize all sites to be closed
@@ -54,11 +58,12 @@ public class Percolation {
 
         if (row == 0) {
             o.union(to2D(row, col), top);
+            o2.union(to2D(row, col), top);
         }
-        /*if (row == N - 1) {
+        if (row == N - 1) {
             o.union(to2D(row, col), bottom);
         }
-        */
+
 
         // connect to surrouding sites.
         for (int c = col - 1; c <= col + 1; c += 1) {
@@ -67,6 +72,7 @@ public class Percolation {
             }
             if (open[row][c]) {
                 o.union(to2D(row, col), to2D(row, c));
+                o2.union(to2D(row, col), to2D(row, c));
             }
         }
 
@@ -76,6 +82,7 @@ public class Percolation {
             }
             if (open[r][col]) {
                 o.union(to2D(row, col), to2D(r, col));
+                o2.union(to2D(row, col), to2D(r, col));
             }
         }
     }
@@ -94,7 +101,7 @@ public class Percolation {
         if (!open[row][col]) {
             return false;
         }
-        if (!o.connected(to2D(row, col), top)) {
+        if (!o2.connected(to2D(row, col), top)) {
             return false;
         }
         return true;
@@ -105,20 +112,7 @@ public class Percolation {
     }
 
     public boolean percolates() {
-        /*for (int r = 0; r < N; r++) {
-            if (isFull(N - 1, r)) {
-                return true;
-            }
-        }
-        return false;
-        */
-        for (int c = 0; c < N; c += 1) {
-            if (isFull(N - 1, c)) {
-                return true;
-            }
-        }
-        return false;
-        //return o.connected(top, bottom);
+        return o.connected(top, bottom);
     }
 
     private boolean isOut(int row, int col) {
