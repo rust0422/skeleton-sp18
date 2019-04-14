@@ -8,8 +8,12 @@ public class Percolation {
     private int top;
     private int bottom;
     private int N;
+    private int count; // # of open sites
 
     public Percolation(int N) {
+        if (N <= 0) {
+            throw new java.lang.IllegalArgumentException("N must bee positive.");
+        }
         // 2 more for top and bottom
         o = new WeightedQuickUnionUF(N * N + 2);
         this.N = N;
@@ -42,7 +46,12 @@ public class Percolation {
         if (isOut(row, col)) {
             throw new ArrayIndexOutOfBoundsException("Out of Boundary!!!");
         }
-        open[row][col] = true;
+
+        if (!open[row][col]) {
+            open[row][col] = true;
+            count += 1;
+        }
+
         if (row == 0) {
             o.union(to2D(row, col), top);
         }
@@ -81,22 +90,17 @@ public class Percolation {
         if (isOut(row, col)) {
             throw new ArrayIndexOutOfBoundsException("Out of Boundary!!!");
         }
-        if (open[row][col] && o.connected(to2D(row, col), top)) {
-            return true;
+        if (!open[row][col]) {
+            return false;
         }
-        return false;
+        if (!o.connected(to2D(row, col), top)) {
+            return false;
+        }
+        return true;
     }
 
     public int numberOfOpenSites() {
-        int num = 0;
-        for (int r = 0; r < N; r += 1) {
-            for (int c = 0; c < N; c += 1) {
-                if (open[r][c]) {
-                    num += 1;
-                }
-            }
-        }
-        return num;
+        return count;
     }
 
     public boolean percolates() {
