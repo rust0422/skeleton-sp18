@@ -4,11 +4,11 @@ import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
-    final static double COEF = 1.96;
+    private final static double COEF = 1.96;
 
-    int T;
-    double[] res;
-    int Ns; //N squared
+    private int T;
+    private double[] res;
+    private int Ns; //N squared
 
     public PercolationStats(int N, int T, PercolationFactory pf) {
         if (N <= 0 || T <= 0) {
@@ -19,9 +19,9 @@ public class PercolationStats {
 
         res = new double[T];
 
-        Percolation p = pf.make(N);
 
         for (int t = 0; t < T; t += 1) {
+            Percolation p = pf.make(N);
             int s = 0;
             while (!p.percolates()) {
                 int r = StdRandom.uniform(0, N);
