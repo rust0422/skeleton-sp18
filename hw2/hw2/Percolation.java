@@ -39,7 +39,7 @@ public class Percolation {
      * @param col
      * @return
      */
-    public int to2D(int row, int col) {
+    private int to2D(int row, int col) {
         if (isOut(row, col)) {
             throw new ArrayIndexOutOfBoundsException("Out of Boundary!!!");
         }
@@ -121,5 +121,8 @@ public class Percolation {
         if (col < 0 || col >= N)
             return true;
         return false;
+    }
+
+    public static void main(String[] args) {
     }
 }
