@@ -6,10 +6,11 @@ public class OomageTestUtility {
     public static boolean haveNiceHashCodeSpread(List<Oomage> oomages, int M) {
         int[] load = new int[M];
         for (Oomage o : oomages) {
-            load[o.hashCode() % M] += 1;
+            load[(o.hashCode() & 0x7FFFFFFF) % M] += 1;
         }
         int N = oomages.size();
         for (int l : load) {
+            //System.out.println(l);
             if (l * 50 < N) return false;
             if (l * 2.5 > N) return false;
         }
