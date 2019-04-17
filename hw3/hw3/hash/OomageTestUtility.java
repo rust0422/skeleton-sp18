@@ -11,7 +11,7 @@ public class OomageTestUtility {
         }
         int N = oomages.size();
         for (int l : load) {
-            System.out.println(l);
+            //System.out.println(l);
             if (l * 50 < N) return false;
             if (l * 2.5 > N) return false;
         }
